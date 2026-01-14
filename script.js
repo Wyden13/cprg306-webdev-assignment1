@@ -64,53 +64,38 @@ youngCharactersBelowAge(characters, 40);
 // If a character object is missing the name property, use console.error() to log a descriptive error message 
 // to the console, and dynamically create and display the error message in the HTML div element with id "error-messages".
 
-function youngCharactersBelowAgeWithErrorHandling(characters, age) {
-  // characters.filter(character => character.age < age)
-  //   .forEach(element => {
-  //     try {
-  //       if (!element.hasOwnProperty('name')) {
-  //         throw new Error(`Character with ID ${element.id} is missing the 'name' property.`);
-  //       }
-  //       const li = document.createElement("li");
-  //       li.textContent = element.name;
-  //       document.getElementById("age-filter-list").appendChild(li);
-  //     } catch (error) {
-  //       console.error(error.message);
-  //       const errorDiv = document.getElementById("error-messages");
-  //       const errorMsg = document.createElement("p");
-  //       errorMsg.textContent = error.message;
-  //       errorDiv.appendChild(errorMsg);
-  //     }
-  //   });
-  characters.forEach(element => {
+function youngCharactersBelowAgeWithErrorHandling(characters,listDisplay, errorDisplay ,age) {
+  characters.filter(character => character.age < age)
+    .forEach(element => {
   try {
     if (!element.hasOwnProperty('name')) {
       throw new Error(`Character with ID ${element.id} is missing the 'name' property.`);
     }
     const li = document.createElement("li");
     li.textContent = element.name;
-    document.getElementById("function-list").appendChild(li);
+    document.getElementById(listDisplay).appendChild(li);
   } catch (error) {
     console.error(error.message);
-    const errorDiv = document.getElementById("error-messages");
+    const errorDiv = document.getElementById(errorDisplay);
     const errorMsg = document.createElement("p");
+    errorMsg.className = "error-message";
     errorMsg.textContent = error.message;
     errorDiv.appendChild(errorMsg);
   }
 });
 }
-youngCharactersBelowAgeWithErrorHandling(characters, 40);
 // 6. Create a second array called "brokenCharacters" that intentionally contains 
 // objects with missing name properties (e.g., objects with only id and age). 
 // Pass this broken array to your error-handling functions from exercise 5. 
 // Verify that your error handling correctly identifies the missing name properties, 
 // logs appropriate error messages to the console, and displays those error messages in the HTML div element with 
 // id "broken-array-errors".
+
 const brokenCharacters = [
   { id: 11, age: 30 },
-  { id: 12, name: "Boba Fett", age: 35 },
+  { id: 12, age: 35 },
   { id: 13, age: 28 },
 ];
 
-youngCharactersBelowAgeWithErrorHandling(brokenCharacters, 40);
-renderCharacterNames(brokenCharacters); 
+youngCharactersBelowAgeWithErrorHandling(characters, "error-handling-list", "error-messages", 40);
+youngCharactersBelowAgeWithErrorHandling(brokenCharacters, "broken-array-lists", "broken-array-errors", 40);
